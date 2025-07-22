@@ -63,6 +63,8 @@ module.exports = function (RED) {
     }
 
     function NewData(telegram, aesKey, serialNo, node) {
+        // Logge das empfangene Telegramm als Hex-String zur Analyse
+        node.log("RAW: " + telegram.toString("hex"));
         try {
             //process the meter, if it can't be processed then exit
             if (!node.meter.processTelegramData(telegram, { aes: aesKey }))
