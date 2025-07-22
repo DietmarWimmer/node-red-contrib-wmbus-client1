@@ -113,21 +113,30 @@ module.exports = function (RED) {
         let durationLeak = node.meter.getInfoCodeLeakDuration(telegram);
         let currentValue = node.meter.getMeterValue(telegram);
         let monthStartValue = node.meter.getMeterTargetValue(telegram);
+        let waterTemp = node.meter.getWaterTemperature?.(telegram);
+        let ambientTemp = node.meter.getAmbientTemperature?.(telegram);
+        let dailyMinTemp = node.meter.getDailyMinTemperature?.(telegram);
+        let dailyMaxTemp = node.meter.getDailyMaxTemperature?.(telegram);
         //generate a payload
         let msg = {
-            payload: {
-                currentValue: currentValue,
-                monthStartValue: monthStartValue,
-                meterDry: infoDry,
-                dryDuration: durationDry,
-                reverseFlow: infoReverse,
-                reverseDuration: durationReverse,
-                burst: infoBurst,
-                burstDuration: durationBurst,
-                leak: infoLeak,
-                leakDuration: durationLeak,
-                name: node.name
-            }
+        payload: {
+                    currentValue: currentValue,
+                    monthStartValue: monthStartValue,
+                    meterDry: infoDry,
+                    dryDuration: durationDry,
+                    reverseFlow: infoReverse,
+                    reverseDuration: durationReverse,
+                    burst: infoBurst,
+                    burstDuration: durationBurst,
+                    leak: infoLeak,
+                    leakDuration: durationLeak,
+                    waterTemp: waterTemp,
+                    ambientTemp: ambientTemp,
+                    dailyMinTemp: dailyMinTemp,
+                    dailyMaxTemp: dailyMaxTemp,
+                    name: node.name
+                }
+
         };
         //Send it
         node.send(msg);
